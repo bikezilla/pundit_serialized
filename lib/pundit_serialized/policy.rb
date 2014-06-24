@@ -6,7 +6,9 @@ module PunditSerialized
       def as_json(user, object)
         policy = new(user, object)
 
-        instance_methods(false).map { |method| [method.to_s.chop,  policy.send(method)] }.to_h
+        methods = instance_methods(false) - [:permitted_attributes]
+
+        methods.map { |method| [method.to_s.chop,  policy.send(method)] }.to_h
       end
     end
   end
