@@ -3,7 +3,11 @@ module PunditSerialized
     extend ActiveSupport::Concern
 
     def permissions
-      self.class.to_s.gsub('Serializer','Policy').constantize.as_json(scope, object)
+      if scope
+        self.class.to_s.gsub('Serializer','Policy').constantize.as_json(scope, object)
+      else
+        {}
+      end
     end
 
   end
