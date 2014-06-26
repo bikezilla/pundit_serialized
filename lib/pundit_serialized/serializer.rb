@@ -4,7 +4,9 @@ module PunditSerialized
 
     def permissions
       if scope
-        self.class.to_s.gsub('Serializer','Policy').constantize.as_json(scope, object)
+        policy_klass = (object.class.to_s + 'Policy').constantize
+
+        policy_klass.as_json(scope, object)
       else
         {}
       end
